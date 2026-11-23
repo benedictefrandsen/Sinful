@@ -1,0 +1,653 @@
+/*
+Theme Name:  Astra Child Theme
+Theme URI:   https://wpastra.com/
+Author:      Benedicte Frandsen
+Author URI:  https://sinful-letsplayitsafe.benedictefrandsen.com
+Description: Child theme based on Astra.
+Version:     1.0.4
+Template:    astra
+*/
+
+/* ==========================================================
+   1. SKRIFTTYPE OG GRUNDSTØRRELSER
+   ========================================================== */
+
+body,
+button,
+input,
+select,
+textarea,
+h1, h2, h3, h4, h5, h6,
+.entry-content h1, .entry-content h2, .entry-content h3,
+.entry-content h4, .entry-content h5, .entry-content h6,
+.site-title,
+.main-header-menu,
+.ast-builder-menu,
+.wp-block-navigation,
+.wp-block-button__link,
+.ast-button,
+.ast-custom-button {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* Overskrift 1 */
+h1,
+.entry-content h1,
+.wp-block-heading h1,
+h1.wp-block-heading {
+  font-size: 32px !important;
+  line-height: 1.2 !important;
+}
+
+/* Overskrift 2 */
+h2,
+.entry-content h2,
+h2.wp-block-heading {
+  font-size: 18px !important;
+  line-height: 1.3 !important;
+}
+
+/* Brødtekst */
+body,
+p,
+li,
+.entry-content p,
+.wp-block-paragraph {
+  font-size: 14px !important;
+  line-height: 1.7;
+}
+
+/* Knaptekst */
+button,
+.wp-block-button__link,
+.wp-element-button,
+.ast-button,
+.ast-custom-button,
+input[type="submit"] {
+  font-size: 16px !important;
+}
+
+
+/* ==========================================================
+   2. HOVER PÅ ALLE KNAPPER (hele sitet)
+   ========================================================== */
+
+.wp-block-button__link,
+.wp-element-button,
+.ast-button,
+.ast-custom-button,
+.lh-btn,
+button:not(.menu-toggle):not(.ast-mobile-popup-close),
+input[type="submit"],
+input[type="button"] {
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, background-color .25s ease, color .25s ease !important;
+}
+.wp-block-button__link:hover,
+.wp-element-button:hover,
+.ast-button:hover,
+.ast-custom-button:hover,
+.lh-btn:not(:disabled):hover,
+button:not(.menu-toggle):not(.ast-mobile-popup-close):not(:disabled):hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.wp-block-button__link:focus-visible,
+.wp-element-button:focus-visible,
+.lh-btn:focus-visible {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(226, 54, 110, .35) !important;
+  filter: brightness(1.08);
+}
+.wp-block-button__link:active,
+.wp-element-button:active,
+.lh-btn:active {
+  transform: translateY(0) scale(.98);
+  box-shadow: 0 4px 10px rgba(226, 54, 110, .25) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wp-block-button__link, .wp-element-button, .ast-button, .lh-btn { transition: none !important; }
+  .wp-block-button__link:hover, .wp-element-button:hover, .ast-button:hover, .lh-btn:hover { transform: none; }
+}
+
+
+/* ==========================================================
+   3. FORSIDEN: HERO
+   ========================================================== */
+
+/* Overskriften: lidt større end de andre H1 overskrifter */
+.home .wp-block-cover .wp-block-column h1 {
+  font-size: clamp(32px, 3.2vw, 44px) !important;
+  line-height: 1.15 !important;
+}
+/* Underteksten: større end den almindelige brødtekst */
+.home .wp-block-cover .wp-block-column p:not(:empty) {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
+/* Heroens højde, og plads i bunden til det blå bånd,
+   så teksten står i midten af den synlige del */
+.home .entry-content > .wp-block-group:first-child > .wp-block-cover {
+  min-height: 780px !important;
+  padding-bottom: calc(15.28vw - 40px) !important;
+}
+/* Overskriften præcis på to linjer på computer */
+@media (min-width: 782px) {
+  .home .wp-block-cover .wp-block-column h1 {
+    white-space: nowrap !important;
+    overflow: visible !important;
+  }
+}
+@media (max-width: 700px) {
+  .home .entry-content > .wp-block-group:first-child > .wp-block-cover {
+    padding-bottom: calc(26vw - 20px) !important;
+  }
+}
+@media (max-width: 600px) {
+  .home .wp-block-cover .wp-block-column h1 { font-size: 28px !important; }
+  .home .wp-block-cover .wp-block-column p:not(:empty) { font-size: 16px !important; }
+  .home .entry-content > .wp-block-group:first-child > .wp-block-cover { min-height: 680px !important; }
+}
+
+
+/* ==========================================================
+   4. FORSIDEN: DET BLÅ BÅND "LET'S PLAY IT SAFE"
+   (HTML og script ligger stadig i HTML blokken på forsiden)
+   ========================================================== */
+
+.sf-ribbon {
+  --sf-rib-h: 15.28vw; /* 220/1440 af bredden */
+  position: relative;
+  z-index: 50;
+  box-sizing: border-box;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin: calc(-1 * var(--sf-rib-h) - 2px) calc(50% - 50vw) 0 !important;
+  padding: 0 !important;
+  height: var(--sf-rib-h);
+  overflow-x: clip;
+  overflow-y: visible;
+  line-height: 0;
+  pointer-events: none;
+}
+/* Hvid flade under båndet, der dækker den lyserøde stribe nederst i heroen */
+.sf-ribbon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 4px);
+  height: 44px;
+  background: #ffffff;
+}
+.sf-ribbon svg { display: block; width: 100%; height: var(--sf-rib-h); overflow: visible; }
+.sf-ribbon-white { fill: #ffffff; }
+.sf-ribbon-band {
+  fill: none;
+  stroke: #0000ff;
+  stroke-width: 64;
+}
+.sf-ribbon-text, .sf-ribbon-measure {
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  fill: #ffffff;
+}
+@media (max-width: 700px) {
+  .sf-ribbon { --sf-rib-h: 26vw; }
+  .sf-ribbon svg { width: 170%; margin-left: -35%; }
+}
+
+
+/* ==========================================================
+   5. BØLGER MELLEM SEKTIONERNE
+   ========================================================== */
+
+html, body { overflow-x: clip; }
+.entry-content .sf-wave,
+.sf-wave {
+  --sf-wave-h: clamp(40px, 6vw, 90px);
+  display: block !important;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 0 !important;
+  line-height: 0;
+  pointer-events: none;
+}
+.sf-wave svg {
+  display: block;
+  width: 100% !important;
+  max-width: none !important;
+  height: var(--sf-wave-h);
+}
+.entry-content .sf-wave--overlap,
+.sf-wave--overlap {
+  margin-top: calc(-1 * var(--sf-wave-h)) !important;
+  margin-bottom: -1px !important;
+}
+/* Ingen sprække mellem bølge og sektion */
+.sf-wave + * { margin-top: 0 !important; }
+
+/* Hvid flade fra båndet og ned til "Oplev i vores Pop-up" */
+.entry-content > .sf-ribbon ~ .wp-block-spacer:has(+ h1.alignwide) {
+  margin-top: 0 !important;
+  background: #ffffff;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+}
+
+
+/* ==========================================================
+   6. FORSIDEN: LYKKEHJULET
+   ========================================================== */
+
+/* Sektionen i fuld bredde, så den møder bølgerne */
+.entry-content .wp-block-columns:has(#Lykkehjul) {
+  box-sizing: border-box;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+/* Hjulet */
+.lh-wheel { max-width: 520px; margin: 2rem auto; }
+.lh-wheel canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: 50% 50%;
+  animation: lh-pulse 1.8s ease-in-out infinite;
+  will-change: transform, filter;
+}
+/* Blød puls med lyserødt skær, når hjulet står stille */
+@keyframes lh-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(226, 54, 110, 0));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 28px rgba(226, 54, 110, .55));
+  }
+}
+/* Stop, når man holder musen over, og mens hjulet drejer */
+.lh-wheel:hover canvas,
+body:has(.lh-btn:disabled) .lh-wheel canvas {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lh-wheel canvas { animation: none; }
+}
+
+/* Formularen ved siden af hjulet */
+.lh-panel { max-width: 420px; font-family: inherit; }
+.lh-panel .lh-form label.lh-lbl { display: block; font-weight: 700; color: #561730; margin-bottom: .4rem; }
+.lh-panel input[type=tel] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 1.1rem;
+  font-size: 1.05rem;
+  font-family: inherit;
+  background: #fff;
+  border: 2px solid #8a7c80;
+  border-radius: 10px;
+  outline: none;
+}
+.lh-panel input[type=tel]:focus { border-color: #E2366E; }
+.lh-panel .lh-consent { display: flex; gap: .5rem; align-items: flex-start; margin-top: .8rem; font-size: .85rem; color: #561730; }
+.lh-panel .lh-consent input { margin-top: .2rem; accent-color: #E2366E; }
+.lh-panel .lh-err { color: #c8104b; font-size: .85rem; min-height: 1.2em; margin-top: .4rem; }
+.lh-panel .lh-btn { margin-top: .6rem; border: 0; cursor: pointer; }
+.lh-panel .lh-btn:disabled { opacity: .5; cursor: not-allowed; }
+.lh-panel .lh-result { min-height: 1.6em; margin-top: 1rem; font-size: 1.2rem; font-weight: 800; color: #d6265f; }
+
+/* Udfoldelse med info om telefonnummeret, når betingelserne accepteres */
+.lh-info {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .4s ease, opacity .4s ease, margin-top .4s ease;
+  margin-top: 0;
+}
+.lh-info > div { overflow: hidden; }
+.lh-info.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: .8rem;
+}
+.lh-info-box {
+  background: #ffffff;
+  border-left: 4px solid #E2366E;
+  border-radius: 10px;
+  padding: .9rem 1rem;
+  color: #561730;
+  font-size: .85rem;
+  line-height: 1.55;
+}
+.lh-info-box p { margin: 0 0 .5rem; font-size: .85rem !important; }
+.lh-info-box p:last-child { margin-bottom: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .lh-info { transition: none; }
+}
+
+
+/* ==========================================================
+   7. FORSIDEN: FIND OS PÅ FESTIVALEN
+   ========================================================== */
+
+#Find-os h2.wp-block-heading {
+  font-size: 44px !important;
+  line-height: 1.2 !important;
+}
+#Find-os .wp-block-column p {
+  font-size: 18px !important;
+}
+@media (max-width: 600px) {
+  #Find-os h2.wp-block-heading { font-size: 32px !important; }
+}
+
+
+/* ==========================================================
+   8. FORSIDEN: BLOG KORTENE
+   ========================================================== */
+
+#Blog > h2.wp-block-heading {
+  font-size: 44px !important;
+  line-height: 1.2 !important;
+}
+@media (max-width: 600px) {
+  #Blog > h2.wp-block-heading { font-size: 32px !important; }
+}
+
+#Blog .wp-block-column > .wp-block-group { overflow: hidden; }
+#Blog figure.wp-block-image,
+#Blog .wp-block-image a,
+#Blog .wp-block-image img {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#Blog .wp-block-image img {
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  border-radius: 40px !important;
+}
+/* Pilene: 30 px, med en klikflade på mindst 44 px */
+#Blog p.has-text-align-right {
+  font-size: 30px !important;
+  line-height: 1 !important;
+}
+#Blog p.has-text-align-right a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  transition: transform .25s ease;
+}
+#Blog p.has-text-align-right a:hover,
+#Blog p.has-text-align-right a:focus-visible {
+  transform: translateX(6px);
+}
+
+
+/* ==========================================================
+   9. INSTAGRAM FEED
+   ========================================================== */
+
+/* "Følg med på Instagram" knappen i midten */
+#sb_instagram #sbi_load {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center !important;
+  align-items: center;
+  gap: 12px;
+  width: 100% !important;
+  float: none !important;
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+#sb_instagram #sbi_load .sbi_load_btn[style*="display: none"],
+#sb_instagram #sbi_load .sbi_load_btn:empty { display: none !important; }
+#sb_instagram #sbi_load .sbi_follow_btn {
+  display: inline-block !important;
+  float: none !important;
+  margin: 0 auto !important;
+}
+
+
+/* ==========================================================
+   10. SCROLL ANIMATIONER
+   (scriptet ligger stadig i HTML blokken på forsiden)
+   ========================================================== */
+
+.sr-on .sr {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--sr-delay, 0s);
+}
+.sr-on .sr.sr-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sr-on .sr { opacity: 1; transform: none; transition: none; }
+}
+
+
+/* ==========================================================
+   11. BLOGINDLÆG
+   ========================================================== */
+
+/* Luft i siderne og en behagelig læsebredde */
+body.single-post .entry-header,
+body.single-post .entry-content,
+body.single-post .post-thumb-img-content,
+body.single-post .ast-single-entry-banner .ast-container {
+  box-sizing: border-box;
+  max-width: 860px !important;
+  width: 100%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: clamp(20px, 5vw, 48px) !important;
+  padding-right: clamp(20px, 5vw, 48px) !important;
+}
+/* Alt indhold følger samme kolonne i midten */
+body.single-post .entry-content > * {
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* Billedet fylder kolonnens bredde og går aldrig ud over den */
+body.single-post .entry-content figure.wp-block-image,
+body.single-post .entry-content .wp-block-image.aligncenter {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center;
+}
+body.single-post .entry-content figure.wp-block-image img {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 24px;
+}
+/* Titlen i midten */
+body.single-post .entry-header,
+body.single-post .entry-title,
+body.single-post .ast-single-entry-banner,
+body.single-post .ast-single-entry-banner .entry-title,
+body.single-post .entry-meta {
+  text-align: center !important;
+}
+body.single-post .ast-single-entry-banner .ast-container {
+  display: block !important;
+}
+
+
+/* ==========================================================
+   12. FOOTER
+   ========================================================== */
+
+/* Hvid bølge i toppen af footeren */
+.site-footer { position: relative; }
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: clamp(40px, 6vw, 90px);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L1440,0 L1440,52 C1220,108 1000,20 760,58 C520,96 260,18 0,64 Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat top center / 100% 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+/* Lidt ekstra luft i toppen, så bølgen ikke dækker indholdet */
+.site-footer > div:first-child { padding-top: max(60px, calc(clamp(40px, 6vw, 90px) + 30px)) !important; }
+
+/* Al tekst venstrestillet */
+.site-footer .footer-widget-area,
+.site-footer .sinful-footer,
+.site-footer .sinful-footer .wp-block-column,
+.site-footer .sinful-footer h3,
+.site-footer .sinful-footer h4,
+.site-footer .sinful-footer p {
+  text-align: left !important;
+}
+.site-footer .sinful-footer .wp-block-column {
+  align-items: flex-start !important;
+}
+.site-footer .sinful-footer .wp-block-buttons {
+  justify-content: flex-start !important;
+}
+
+/* Faste kolonnebredder på computer, så Kontakt har plads til mailen på én linje */
+@media (min-width: 782px) {
+  .sinful-footer > .wp-block-columns > .wp-block-column:nth-child(1) { flex: 0 0 28% !important; }
+  .sinful-footer > .wp-block-columns > .wp-block-column:nth-child(2) { flex: 1 1 0 !important; }
+  .sinful-footer > .wp-block-columns > .wp-block-column:nth-child(3) { flex: 1 1 0 !important; }
+  .sinful-footer > .wp-block-columns > .wp-block-column:nth-child(4) { flex: 0 0 auto !important; }
+}
+
+/* Kontakt: ikoner i stedet for teksten Mail og Instagram */
+.sinful-footer .sf-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.sinful-footer .sf-ico {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+.sinful-footer .sf-ico::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask: var(--sf-icon) no-repeat center / contain;
+  mask: var(--sf-icon) no-repeat center / contain;
+  transition: transform .25s ease;
+}
+.sinful-footer .sf-ico:hover::before { transform: scale(1.15); }
+.sinful-footer .sf-ico-mail {
+  --sf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='4.5' width='19' height='15' rx='2.5'/%3E%3Cpath d='M3 6.5l9 6.5 9-6.5'/%3E%3C/svg%3E");
+}
+.sinful-footer .sf-ico-ig {
+  --sf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='5'/%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Ccircle cx='17.5' cy='6.5' r='0.6' fill='black'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================
+   13. FIND OS: NEDTÆLLING TIL JELLING FESTIVAL
+   (HTML og script ligger stadig i HTML blokken på Find os siden)
+   ========================================================== */
+
+.sf-countdown {
+  text-align: center;
+  padding: 40px 0 20px;
+  margin: 0 0 40px;
+}
+.sf-countdown .sf-cd-label {
+  margin: 0 0 24px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+.sf-countdown .sf-cd-grid {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.sf-countdown .sf-cd-box {
+  background: #f9e1e5;
+  color: #2b2b2b;
+  border-radius: 24px;
+  min-width: 120px;
+  padding: 20px 14px 16px;
+}
+.sf-countdown .sf-cd-num {
+  display: block;
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  color: #e2386f;
+  font-variant-numeric: tabular-nums;
+}
+.sf-countdown .sf-cd-unit {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.sf-countdown .sf-cd-done { margin: 0; font-size: 22px; font-weight: 800; color: #e2386f; }
+@media (max-width: 600px) {
+  .sf-countdown .sf-cd-grid { gap: 10px; }
+  .sf-countdown .sf-cd-box { min-width: 70px; padding: 14px 8px 12px; border-radius: 16px; }
+  .sf-countdown .sf-cd-num { font-size: 32px; }
+  .sf-countdown .sf-cd-unit { font-size: 10px; }
+}
+
+/* Indledende tekst på Find os: større */
+.sf-countdown ~ .wp-block-group .alignwide > p:first-child {
+  font-size: 20px !important;
+  line-height: 1.7 !important;
+}
+@media (max-width: 600px) {
+  .sf-countdown ~ .wp-block-group .alignwide > p:first-child { font-size: 17px !important; }
+}
